@@ -177,10 +177,13 @@
     return nil;
 }
 
-+(NSArray *)tenPageFetch:(NSString *)next
++(NSArray *)tenPageFetch:(NSString *)next stopFetch:(BOOL)stop
 {
     if (next)
     {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+        });
         NSURL *nexturl = [NSURL URLWithString:next];
         NSData *data = [NSData dataWithContentsOfURL:nexturl];
         NSMutableArray *res = [[NSMutableArray alloc] init];
@@ -190,6 +193,10 @@
         NSDictionary *dic;
         for (int i=0; i<10; i++)
         {
+            if (stop ==  YES)
+            {
+                break;
+            }
             json = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
             if (error)
             {
@@ -216,6 +223,9 @@
                 }
             }
         }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+        });
         return [NSArray arrayWithArray:res];
     }
     return nil;

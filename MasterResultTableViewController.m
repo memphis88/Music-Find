@@ -17,6 +17,8 @@
 #import "SVProgressHUD.h"
 #import "JsonParser.h"
 
+dispatch_queue_t concurrentFetchQueue;
+
 @interface MasterResultTableViewController ()
 
 @end
@@ -33,6 +35,11 @@
     }
     return self;
 }
+- (IBAction)newSearchClicked:(id)sender
+{
+    self.stopFetch = YES;
+    dispatch_suspend(concurrentFetchQueue);
+}
 
 - (void)viewDidLoad
 {
@@ -42,18 +49,16 @@
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    //bad atm
-    dispatch_queue_t concurrentQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    dispatch_async(concurrentQueue, ^{
+    //better
+    concurrentFetchQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(concurrentFetchQueue, ^{
         if (self.next)
         {
+            self.stopFetch = NO;
             NSArray *fetch;
             NSString *next = self.next;
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-            });
             do {
-                fetch = [JsonParser tenPageFetch:next];
+                fetch = [JsonParser tenPageFetch:next stopFetch:self.stopFetch];
                 next = [fetch lastObject];
                 NSLog(@"%@",next);
                 NSMutableArray *tmp = [NSMutableArray arrayWithArray:fetch];
@@ -68,10 +73,11 @@
                     [self.tableView reloadData];
                     NSLog(@"reload data table: %d",[self.tableView numberOfRowsInSection:2]);
                 });
-            } while (![next isEqualToString:@"nonext"]);
+            } while (![next isEqualToString:@"nonext"] && self.stopFetch == NO);
             dispatch_async(dispatch_get_main_queue(), ^{
-                [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-                [SVProgressHUD dismissWithSuccess:@"Fetch Complete" afterDelay:3];
+                if (!self.stopFetch) {
+                    [SVProgressHUD dismissWithSuccess:@"Fetch Complete" afterDelay:3];
+                }
             });
         }
         else
@@ -142,15 +148,11 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    // Return the number of sections.
-    //return [self.dataController sectionCount];
     return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // Return the number of rows in the section.
-    //NSLog(@"%@",);
     if (section == 0)
     {
         return [self.dataController.artists count];
@@ -196,6 +198,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    self.stopFetch = YES;
+    dispatch_suspend(concurrentFetchQueue);
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     [SVProgressHUD showWithStatus:@"Loading..." maskType:SVProgressHUDMaskTypeBlack];
     if ([indexPath section] == 0)
     {

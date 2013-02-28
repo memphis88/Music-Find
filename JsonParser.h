@@ -15,6 +15,6 @@
 + (BOOL)paginationCheck:(NSData *)data;
 + (NSArray *)pagesFromData:(NSData *)data;
 + (NSArray *)moreThanTen:(NSData *)data;
-+ (NSArray *)tenPageFetch:(NSString *)next;
++ (NSArray *)tenPageFetch:(NSString *)next stopFetch:(BOOL)stop;
 
 @end

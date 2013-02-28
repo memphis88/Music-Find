@@ -124,6 +124,7 @@
                     <navigationItem key="navigationItem" title="Results" id="4kk-Za-BqF">
                         <barButtonItem key="leftBarButtonItem" title="New Search" id="bmW-Nf-GT6">
                             <connections>
+                                <action selector="newSearchClicked:" destination="3KH-2i-X2Q" id="Idz-2F-e6C"/>
                                 <segue destination="Bke-iJ-fAU" kind="modal" identifier="NewSearch" modalTransitionStyle="flipHorizontal" id="xKU-tb-Dyo"/>
                             </connections>
                         </barButtonItem>
@@ -829,8 +830,8 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="M4Y-TK-8RD"/>
-        <segue reference="Wnr-HO-7rj"/>
+        <segue reference="Qvh-TL-htA"/>
+        <segue reference="bSp-F9-y7i"/>
         <segue reference="Svw-1W-dIn"/>
     </inferredMetricsTieBreakers>
 </document>
