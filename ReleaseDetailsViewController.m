@@ -46,6 +46,11 @@
     return cell;
 }
 
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 35.0f;
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -149,7 +154,19 @@
         [self.theRelease.listings addObject:str];
     }
     [self.theRelease.listings removeLastObject];
-    [self performSegueWithIdentifier:@"SearchMarket" sender:self];
+    if ([self.theRelease.listings count] > 1)
+    {
+        [self performSegueWithIdentifier:@"SearchMarket" sender:self];
+    }
+    else
+    {
+        UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Nothing found!"
+                                                          message:@"There are no listings for the selected item at the moment, please try a different version."
+                                                         delegate:nil
+                                                cancelButtonTitle:@"OK"
+                                                otherButtonTitles:nil];
+        [message show];
+    }
     [self.spinner stopAnimating];
     [self.searchButton setHidden:NO];
     //NSLog(@"id: %d title: %d",[self.theRelease.listings count],[self.theRelease.listingTitles count]);

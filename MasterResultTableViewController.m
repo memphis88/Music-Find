@@ -198,9 +198,6 @@ dispatch_queue_t concurrentFetchQueue;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    self.stopFetch = YES;
-    dispatch_suspend(concurrentFetchQueue);
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     [SVProgressHUD showWithStatus:@"Loading..." maskType:SVProgressHUDMaskTypeBlack];
     if ([indexPath section] == 0)
     {
@@ -304,6 +301,12 @@ dispatch_queue_t concurrentFetchQueue;
 - (void)viewDidUnload {
     [self setQueryLabel:nil];
     [super viewDidUnload];
+}
+
+-(void)viewDidDisappear:(BOOL)animated
+{
+    self.stopFetch = YES;
+    dispatch_suspend(concurrentFetchQueue);
 }
 
 -(void)dealloc

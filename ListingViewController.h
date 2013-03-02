@@ -12,6 +12,7 @@
 
 @interface ListingViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIImageView *releaseImage;
 @property (weak, nonatomic) IBOutlet UILabel *artistRelease;
 @property (weak, nonatomic) IBOutlet UILabel *label;

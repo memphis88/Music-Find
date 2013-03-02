@@ -17,6 +17,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *queryLabel;
 @property (weak, nonatomic) NSString *next;
 
-@property BOOL stopFetch;
+@property (nonatomic) BOOL stopFetch;
 
 @end
