@@ -11,7 +11,6 @@
 #import "MasterResultTableViewController.h"
 #import "DataController.h"
 #import "Artist.h"
-#import "GTMOAuthAuthentication.h"
 #import "SVProgressHUD.h"
 #import "Reachability.h"
 
