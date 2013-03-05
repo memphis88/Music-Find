@@ -14,7 +14,7 @@
 + (NSArray *)jsonArrayFromData:(NSString *)key :(NSData *)data;
 + (BOOL)paginationCheck:(NSData *)data;
 + (NSArray *)pagesFromData:(NSData *)data;
-+ (NSArray *)moreThanTen:(NSData *)data;
-+ (NSArray *)tenPageFetch:(NSString *)next stopFetch:(BOOL)stop;
++ (NSArray *)moreThanFive:(NSData *)data;
++ (NSArray *)threePageFetch:(NSString *)next stopFetch:(BOOL)stop;
 
 @end

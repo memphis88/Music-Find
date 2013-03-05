@@ -58,7 +58,7 @@ dispatch_queue_t concurrentFetchQueue;
             NSArray *fetch;
             NSString *next = self.next;
             do {
-                fetch = [JsonParser tenPageFetch:next stopFetch:self.stopFetch];
+                fetch = [JsonParser threePageFetch:next stopFetch:self.stopFetch];
                 next = [fetch lastObject];
                 NSLog(@"%@",next);
                 NSMutableArray *tmp = [NSMutableArray arrayWithArray:fetch];

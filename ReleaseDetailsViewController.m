@@ -41,8 +41,16 @@
 {
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    cell.textLabel.text = [NSString stringWithFormat:@" %@. %@", [[self.theRelease.tracklist objectAtIndex:indexPath.row] objectAtIndex:0], [[self.theRelease.tracklist objectAtIndex:indexPath.row] objectAtIndex:1]];
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", [[self.theRelease.tracklist objectAtIndex:indexPath.row] objectAtIndex:2]];
+    if ([[[self.theRelease.tracklist objectAtIndex:indexPath.row] objectAtIndex:0] isEqualToString:@""])
+    {
+        cell.textLabel.text = [NSString stringWithFormat:@"%@", [[self.theRelease.tracklist objectAtIndex:indexPath.row] objectAtIndex:1]];
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", [[self.theRelease.tracklist objectAtIndex:indexPath.row] objectAtIndex:2]];
+    }
+    else
+    {
+        cell.textLabel.text = [NSString stringWithFormat:@" %@. %@", [[self.theRelease.tracklist objectAtIndex:indexPath.row] objectAtIndex:0], [[self.theRelease.tracklist objectAtIndex:indexPath.row] objectAtIndex:1]];
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", [[self.theRelease.tracklist objectAtIndex:indexPath.row] objectAtIndex:2]];
+    }
     return cell;
 }
 
@@ -106,7 +114,7 @@
     [self.tableView reloadData];
     self.view.frame = CGRectMake(0, 0, 320, self.tableView.contentSize.height+270);
     self.scrollView.frame = CGRectMake(0, 0, 320, 416);
-    if (self.tableView.contentSize.height+270 > 416)
+    if ((self.tableView.contentSize.height+270) > 416)
     {
         self.scrollView.contentSize = CGSizeMake(320, self.tableView.contentSize.height+270);
     }
@@ -116,11 +124,8 @@
     }
     self.tableView.frame = CGRectMake(0, 190, self.tableView.contentSize.width, self.tableView.contentSize.height);
     [self.searchButton setHidden:NO];
-    //NSLog(@"view:%@",NSStringFromCGRect(self.view.frame));
-    //NSLog(@"scroll cont:%@",NSStringFromCGSize(self.scrollView.contentSize));
     self.searchButton.frame = CGRectMake(self.searchButton.frame.origin.x, self.tableView.frame.size.height+210, self.searchButton.frame.size.width, self.searchButton.frame.size.height);
     self.spinner.center = CGPointMake(self.searchButton.center.x, self.searchButton.center.y);
-    //NSLog(@"scroll:%@\ntable:%@\nbutton:%@",NSStringFromCGRect(self.scrollView.frame),NSStringFromCGRect(self.tableView.frame),NSStringFromCGRect(self.searchButton.frame));
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -169,7 +174,6 @@
     }
     [self.spinner stopAnimating];
     [self.searchButton setHidden:NO];
-    //NSLog(@"id: %d title: %d",[self.theRelease.listings count],[self.theRelease.listingTitles count]);
 }
 
 @end

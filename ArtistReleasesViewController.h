@@ -19,7 +19,10 @@
 @property (nonatomic, copy) NSString *artistName;
 @property (nonatomic, copy) NSString *flag;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *roleButton;
+@property (nonatomic) BOOL stopFetch;
+@property (weak, nonatomic) NSString *next;
 
 - (IBAction)showActionSheet:(id)sender;
+- (void)continueFetch:(NSString *)next;
 
 @end

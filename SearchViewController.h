@@ -13,7 +13,6 @@
 @interface SearchViewController : UIViewController <UISearchBarDelegate,UIAlertViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UISearchBar *queryText;
-//@property (strong, nonatomic) GTMOAuthAuthentication *auth;
 @property (weak, nonatomic) IBOutlet UILabel *searchLabel;
 @property (nonatomic, strong) DataController *dataC;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;

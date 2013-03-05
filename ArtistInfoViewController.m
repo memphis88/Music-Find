@@ -101,11 +101,23 @@
             }
             else
             {
-                NSArray *pagedJSONData = [JsonParser pagesFromData:reldata];
+                NSArray *pagedJSONData;
+                NSString *next;
+                if ([[[JsonParser jsonArrayFromData:@"pagination" :reldata] valueForKey:@"pages"] integerValue] <= 5)
+                {
+                    pagedJSONData = [JsonParser pagesFromData:reldata];
+                }
+                else
+                {
+                    NSArray *tmpArr = [JsonParser moreThanFive:reldata];
+                    next = [tmpArr lastObject];
+                    NSMutableArray *tmpMutArr = [NSMutableArray arrayWithArray:tmpArr];
+                    [tmpMutArr removeLastObject];
+                    pagedJSONData = [NSArray arrayWithArray:tmpMutArr];
+                }
                 for (NSData *arrayData in pagedJSONData)
                 {
                     releasesResult = [JsonParser jsonArrayFromData:@"releases" :arrayData];
-                    //NSLog(@"%@",releasesResult);
                     [aRVC.masters addObjectsFromArray:[DataController mastersFromJson:releasesResult]];
                     [aRVC.releases addObjectsFromArray:[DataController releasesFromJson:releasesResult]];
                 }
@@ -127,6 +139,8 @@
                         [aRVC.otherReleases addObject:rel];
                     }
                 }
+                NSLog(@"%@",next);
+                [aRVC continueFetch:next];
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [aRVC.tableView reloadData];
                     [SVProgressHUD dismiss];

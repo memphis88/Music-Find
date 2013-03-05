@@ -14,6 +14,9 @@
 #import "SVProgressHUD.h"
 #import "JsonParser.h"
 #import "DataController.h"
+#import "SVProgressHUD.h"
+
+dispatch_queue_t concurrentFetchQueue;
 
 @interface ArtistReleasesViewController ()
 
@@ -81,19 +84,70 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     self.navigationItem.title = self.artistName;
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+}
+
+-(void)continueFetch:(NSString *)next
+{
+    concurrentFetchQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(concurrentFetchQueue, ^{
+        if (next)
+        {
+            self.stopFetch = NO;
+            NSArray *fetch;
+            self.next = next;
+            do {
+                fetch = [JsonParser threePageFetch:self.next stopFetch:self.stopFetch];
+                self.next = [fetch lastObject];
+                NSLog(@"%@",self.next);
+                NSMutableArray *tmp = [NSMutableArray arrayWithArray:fetch];
+                [tmp removeLastObject];
+                fetch = [NSArray arrayWithArray:tmp];
+                for (NSData *arrayData in fetch)
+                {
+                    NSArray *releasesResult = [JsonParser jsonArrayFromData:@"releases" :arrayData];
+                    [self.masters addObjectsFromArray:[DataController mastersFromJson:releasesResult]];
+                    [self.releases addObjectsFromArray:[DataController releasesFromJson:releasesResult]];
+                }
+                for (Master *mast in self.masters) {
+                    if ([mast.role isEqualToString:@"Main"]) {
+                        [self.mainMasters addObject:mast];
+                    }
+                    else
+                    {
+                        [self.otherMasters addObject:mast];
+                    }
+                }
+                for (Release *rel in self.releases) {
+                    if ([rel.role isEqualToString:@"Main"]) {
+                        [self.mainReleases addObject:rel];
+                    }
+                    else
+                    {
+                        [self.otherReleases addObject:rel];
+                    }
+                }
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self.tableView reloadData];
+                    NSLog(@"reload data table: %d",[self.tableView numberOfRowsInSection:0]);
+                });
+            } while (![self.next isEqualToString:@"nonext"] && self.stopFetch == NO);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (!self.stopFetch) {
+                    [SVProgressHUD dismissWithSuccess:@"Fetch Complete" afterDelay:3];
+                }
+            });
+        }
+        else
+        {
+            NSLog(@"no next");
+        }
+    });
+
 }
 
 #pragma mark - Table view data source
@@ -350,6 +404,12 @@
             });
         }
     });
+}
+
+-(void)viewDidDisappear:(BOOL)animated
+{
+    self.stopFetch = YES;
+    dispatch_suspend(concurrentFetchQueue);
 }
 
 - (IBAction)showActionSheet:(id)sender

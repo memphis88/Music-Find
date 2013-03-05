@@ -106,7 +106,7 @@
         if (![JsonParser paginationCheck:data])
         {
             NSArray *searchResult = [JsonParser jsonArrayFromData:@"results" :data];
-            if (searchResult)
+            if ([searchResult count]>0)
             {
                 [self setDataC:[[DataController alloc] init]];
                 [[self dataC] artistAndReleaseFromJson:searchResult];
@@ -114,7 +114,9 @@
             }
             else
             {
-                [_searchLabel setText:@"nil returned"];
+                [_searchLabel setText:@"Nothing found."];
+                [SVProgressHUD dismiss];
+                self.searchButton.hidden = NO;
             }
         }
         else
@@ -123,13 +125,13 @@
             [self setDataC:[[DataController alloc] init]];
             NSArray *pagedJSONData;
             NSString *next;
-            if ([[[JsonParser jsonArrayFromData:@"pagination" :data] valueForKey:@"pages"] integerValue] <= 10)
+            if ([[[JsonParser jsonArrayFromData:@"pagination" :data] valueForKey:@"pages"] integerValue] <= 5)
             {
                 pagedJSONData = [JsonParser pagesFromData:data];
             }
             else
             {
-                NSArray *tmpArr = [JsonParser moreThanTen:data];
+                NSArray *tmpArr = [JsonParser moreThanFive:data];
                 next = [tmpArr lastObject];
                 NSMutableArray *tmpMutArr = [NSMutableArray arrayWithArray:tmpArr];
                 [tmpMutArr removeLastObject];

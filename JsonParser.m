@@ -137,7 +137,7 @@
     return nil;
 }
 
-+(NSArray *)moreThanTen:(NSData *)data
++(NSArray *)moreThanFive:(NSData *)data
 {
     if (data)
     {
@@ -148,7 +148,7 @@
         NSDictionary *dic;
         NSURL *next;
         NSString *loading;
-        for (int i=1; i<=10; i++)
+        for (int i=1; i<=5; i++)
         {
             json = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
             if (error)
@@ -159,7 +159,7 @@
             {
                 [res addObject:data];
                 dic = [json objectForKey:@"pagination"];
-                loading = [NSString stringWithFormat:@"Loading...\nPage: %@ of %@\nShowing the 10 first pages",[dic objectForKey:@"page"],[dic objectForKey:@"pages"]];
+                loading = [NSString stringWithFormat:@"Loading...\nPage: %@ of %@\nShowing the 5 first pages",[dic objectForKey:@"page"],[dic objectForKey:@"pages"]];
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [SVProgressHUD showWithStatus:loading maskType:SVProgressHUDMaskTypeBlack];
                 });
@@ -167,7 +167,7 @@
                 next = [NSURL URLWithString:[urls objectForKey:@"next"]];
                 data = [NSData dataWithContentsOfURL:next];
             }
-            if (i==10)
+            if (i==5)
             {
                 [res addObject:[urls valueForKey:@"next"]];
             }
@@ -177,7 +177,7 @@
     return nil;
 }
 
-+(NSArray *)tenPageFetch:(NSString *)next stopFetch:(BOOL)stop
++(NSArray *)threePageFetch:(NSString *)next stopFetch:(BOOL)stop
 {
     if (next)
     {
@@ -191,43 +191,49 @@
         NSDictionary *json;
         NSDictionary *urls;
         NSDictionary *dic;
-        for (int i=0; i<10; i++)
+        if (data)
         {
-            if (stop ==  YES)
+            for (int i=0; i<3; i++)
             {
-                break;
-            }
-            json = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
-            if (error)
-            {
-                NSLog(@"error: %@", error);
-            }
-            else
-            {
-                [res addObject:data];
-                dic = [json objectForKey:@"pagination"];
-                urls = [dic objectForKey:@"urls"];
-                nexturl = [NSURL URLWithString:[urls objectForKey:@"next"]];
-                if (nexturl)
+                if (stop ==  YES)
                 {
-                    if (i==9)
-                    {
-                        [res addObject:[urls valueForKey:@"next"]];
-                    }
-                    data = [NSData dataWithContentsOfURL:nexturl];
+                    break;
+                }
+                json = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+                if (error)
+                {
+                    NSLog(@"error: %@", error);
                 }
                 else
                 {
-                    [res addObject:@"nonext"];
-                    break;
+                    [res addObject:data];
+                    dic = [json objectForKey:@"pagination"];
+                    urls = [dic objectForKey:@"urls"];
+                    nexturl = [NSURL URLWithString:[urls objectForKey:@"next"]];
+                    if (nexturl)
+                    {
+                        if (i==2)
+                        {
+                            [res addObject:[urls valueForKey:@"next"]];
+                        }
+                        data = [NSData dataWithContentsOfURL:nexturl];
+                    }
+                    else
+                    {
+                        [res addObject:@"nonext"];
+                        break;
+                    }
                 }
             }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+            });
+            return [NSArray arrayWithArray:res];
         }
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-        });
-        return [NSArray arrayWithArray:res];
     }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    });
     return nil;
 }
 

@@ -27,6 +27,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.scrollView.delegate = self;
+    [self.scrollView addSubview:self.imageView];
+    self.scrollView.contentSize = self.imageView.frame.size;
 	// Do any additional setup after loading the view.
     //NSLog(@"%@",self.imageURL);
     dispatch_queue_t concurrentQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
@@ -41,6 +44,11 @@
         });
     });
     
+}
+
+-(UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
+{
+    return self.imageView;
 }
 
 - (void)didReceiveMemoryWarning

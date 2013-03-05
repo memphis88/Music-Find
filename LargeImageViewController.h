@@ -8,9 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LargeImageViewController : UIViewController
+@interface LargeImageViewController : UIViewController <UIScrollViewDelegate>
 
 @property (nonatomic, strong) NSURL *imageURL;
 @property (strong, nonatomic) IBOutlet UIImageView *imageView;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
 @end
