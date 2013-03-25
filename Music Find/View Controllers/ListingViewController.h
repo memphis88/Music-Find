@@ -22,7 +22,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *sleeveCondition;
 @property (weak, nonatomic) IBOutlet UILabel *price;
 @property (weak, nonatomic) IBOutlet UILabel *commentLabel;
-@property (weak, nonatomic) IBOutlet UITextView *comments;
+@property (weak, nonatomic) IBOutlet UILabel *comments;
 @property (weak, nonatomic) IBOutlet UILabel *shipsFrom;
 @property (weak, nonatomic) IBOutlet UIButton *discogsButton;
 @property (nonatomic, strong) Release *theRelease;

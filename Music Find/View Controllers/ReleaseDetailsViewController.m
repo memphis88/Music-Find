@@ -11,6 +11,7 @@
 #import "ReleaseImagesViewController.h"
 #import "SearchMarketViewController.h"
 #import "XMLParser.h"
+#import "TrackCell.h"
 
 @interface ReleaseDetailsViewController ()
 
@@ -40,23 +41,23 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    TrackCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     if ([[[self.theRelease.tracklist objectAtIndex:indexPath.row] objectAtIndex:0] isEqualToString:@""])
     {
-        cell.textLabel.text = [NSString stringWithFormat:@"%@", [[self.theRelease.tracklist objectAtIndex:indexPath.row] objectAtIndex:1]];
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", [[self.theRelease.tracklist objectAtIndex:indexPath.row] objectAtIndex:2]];
+        cell.trackName.text = [NSString stringWithFormat:@"%@", [[self.theRelease.tracklist objectAtIndex:indexPath.row] objectAtIndex:1]];
+        cell.trackDuration.text = [NSString stringWithFormat:@"%@", [[self.theRelease.tracklist objectAtIndex:indexPath.row] objectAtIndex:2]];
     }
     else
     {
-        cell.textLabel.text = [NSString stringWithFormat:@" %@. %@", [[self.theRelease.tracklist objectAtIndex:indexPath.row] objectAtIndex:0], [[self.theRelease.tracklist objectAtIndex:indexPath.row] objectAtIndex:1]];
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", [[self.theRelease.tracklist objectAtIndex:indexPath.row] objectAtIndex:2]];
+        cell.trackName.text = [NSString stringWithFormat:@" %@. %@", [[self.theRelease.tracklist objectAtIndex:indexPath.row] objectAtIndex:0], [[self.theRelease.tracklist objectAtIndex:indexPath.row] objectAtIndex:1]];
+        cell.trackDuration.text = [NSString stringWithFormat:@"%@", [[self.theRelease.tracklist objectAtIndex:indexPath.row] objectAtIndex:2]];
     }
     return cell;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 35.0f;
+    return 36.0f;
 }
 
 - (void)didReceiveMemoryWarning

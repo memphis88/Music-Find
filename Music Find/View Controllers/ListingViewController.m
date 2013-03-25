@@ -37,13 +37,20 @@
     {
         self.commentLabel.hidden = YES;
         self.comments.hidden = YES;
-        self.discogsButton.center = CGPointMake(self.view.center.x, self.sleeveCondition.center.y + 42);
+        self.discogsButton.center = CGPointMake(self.view.center.x, self.sleeveCondition.center.y + 52);
     }
     else
     {
         self.comments.text = self.theListing.comments;
-        [self.comments sizeToFit];
-        self.discogsButton.center = CGPointMake(self.view.center.x, (self.comments.frame.size.height + self.comments.frame.origin.y) + 42);
+        CGSize maximumLabelSize = CGSizeMake(296, FLT_MAX);
+        
+        CGSize expectedLabelSize = [self.comments.text sizeWithFont:self.comments.font constrainedToSize:maximumLabelSize lineBreakMode:self.comments.lineBreakMode];
+        
+        //adjust the label the the new height.
+        CGRect newFrame = self.comments.frame;
+        newFrame.size.height = expectedLabelSize.height;
+        self.comments.frame = newFrame;
+        self.discogsButton.center = CGPointMake(self.view.center.x, (self.comments.frame.size.height + self.comments.frame.origin.y) + 52);
     }
     self.artistRelease.text = self.theListing.displayTitle;
 	self.label.text = self.theRelease.label;

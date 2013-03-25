@@ -25,6 +25,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *labelName;
 @property (weak, nonatomic) IBOutlet UILabel *genreLabel;
 
+
 - (IBAction)searchMarket:(id)sender;
 - (void)moreImages;
 - (void)parseIDs:(NSMutableString *)result;
