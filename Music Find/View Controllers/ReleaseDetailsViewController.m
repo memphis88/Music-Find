@@ -70,7 +70,7 @@
 {
     NSString *str = [NSString stringWithFormat:@"http://www.discogs.com/sell/list?release_id=%d&output=rss", self.theRelease.idNumber];
     NSLog(@"%@",str);
-    XMLParser *par = [[XMLParser alloc] initWithDelegate:self :[NSURL URLWithString:str]];
+    XMLParser *par = [[XMLParser alloc] initWithDelegate:self url:[NSURL URLWithString:str]];
     [self.spinner startAnimating];
     [self.searchButton setHidden:YES];
 }

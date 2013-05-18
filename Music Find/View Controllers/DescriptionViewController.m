@@ -38,7 +38,7 @@
     {
         //NSLog(@"resource: %@", self.artist.resourceURL);
         NSData *data = [NSData dataWithContentsOfURL:self.artist.resourceURL];
-        NSArray *profile = [JsonParser jsonArrayFromData:@"profile" :data];
+        NSArray *profile = [JsonParser jsonArrayFromData:@"profile" data:data];
         //NSLog(@"profile: %@", profile);
         if (profile)
         {

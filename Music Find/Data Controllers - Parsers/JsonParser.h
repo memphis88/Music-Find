@@ -10,8 +10,8 @@
 
 @interface JsonParser : NSObject
 
-+ (NSString *)jsonValueFromData:(NSString *)key :(NSData *)data;
-+ (NSArray *)jsonArrayFromData:(NSString *)key :(NSData *)data;
++ (NSString *)jsonValueFromData:(NSString *)key data:(NSData *)data;
++ (NSArray *)jsonArrayFromData:(NSString *)key data:(NSData *)data;
 + (BOOL)paginationCheck:(NSData *)data;
 + (NSArray *)pagesFromData:(NSData *)data;
 + (NSArray *)moreThanFive:(NSData *)data;

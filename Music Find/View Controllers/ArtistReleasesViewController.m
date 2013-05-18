@@ -111,7 +111,7 @@ dispatch_queue_t concurrentFetchQueue;
                 fetch = [NSArray arrayWithArray:tmp];
                 for (NSData *arrayData in fetch)
                 {
-                    NSArray *releasesResult = [JsonParser jsonArrayFromData:@"releases" :arrayData];
+                    NSArray *releasesResult = [JsonParser jsonArrayFromData:@"releases" data:arrayData];
                     [self.masters addObjectsFromArray:[DataController mastersFromJson:releasesResult]];
                     [self.releases addObjectsFromArray:[DataController releasesFromJson:releasesResult]];
                     for (Master *mast in [DataController mastersFromJson:releasesResult]) {
@@ -330,13 +330,13 @@ dispatch_queue_t concurrentFetchQueue;
             [mVVC.master setArtist:self.artistName];
             [mVVC.master makeVersionsURL];
             NSData *data = [NSData dataWithContentsOfURL:mVVC.master.versionsURL];
-            NSArray *versions = [JsonParser jsonArrayFromData:@"versions" :data];
+            NSArray *versions = [JsonParser jsonArrayFromData:@"versions" data:data];
             mVVC.releases = [[NSMutableArray alloc] initWithCapacity:[versions count]];
             [mVVC setReleases:[DataController versionsFromJson:versions]];
             data = [NSData dataWithContentsOfURL:mVVC.master.resourceURL];
-            NSArray *genres = [JsonParser jsonArrayFromData:@"genres" :data];
+            NSArray *genres = [JsonParser jsonArrayFromData:@"genres" data:data];
             NSMutableString *res = [[NSMutableString alloc] init];
-            NSArray *artist = [JsonParser jsonArrayFromData:@"artists" :data];
+            NSArray *artist = [JsonParser jsonArrayFromData:@"artists" data:data];
             NSString *result;
             for (NSDictionary *dic in artist) {
                 if ([dic objectForKey:@"name"]) {
@@ -369,13 +369,13 @@ dispatch_queue_t concurrentFetchQueue;
             ReleaseDetailsViewController *rDVC = [segue destinationViewController];
             [rDVC setTheRelease:sender];
             NSData *data = [NSData dataWithContentsOfURL:rDVC.theRelease.resourceURL];
-            NSArray *images = [JsonParser jsonArrayFromData:@"images" :data];
+            NSArray *images = [JsonParser jsonArrayFromData:@"images" data:data];
             [rDVC setImages:images];
             rDVC.primaryImage = [NSURL URLWithString:[DataController primaryImage150FromJson:images]];
             [rDVC.mainImage setImage:rDVC.theRelease.primaryImage];
-            NSArray *tracklistArray = [JsonParser jsonArrayFromData:@"tracklist" :data];
+            NSArray *tracklistArray = [JsonParser jsonArrayFromData:@"tracklist" data:data];
             rDVC.theRelease.tracklist = [[NSMutableArray alloc] init];
-            NSArray *artist = [JsonParser jsonArrayFromData:@"artists" :data];
+            NSArray *artist = [JsonParser jsonArrayFromData:@"artists" data:data];
             NSString *result;
             for (NSDictionary *dic in artist) {
                 if ([dic objectForKey:@"name"]) {

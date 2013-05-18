@@ -13,7 +13,7 @@
 
 @synthesize title = _title, resourceURL = _resourceURL, idNumber = _idNumber, tracklist = _tracklist;
 
--(id)initWithStats:(NSString *)title :(NSURL *)resourceURL :(int)idNumber
+-(id)initWithStats:(NSString *)title resourceURL:(NSURL *)resourceURL idNum:(int)idNumber
 {
     self = [super init];
     if (self)
@@ -29,7 +29,7 @@
 -(void)makeVersionsURL
 {
     NSData *data = [NSData dataWithContentsOfURL:self.resourceURL];
-    _versionsURL = [NSURL URLWithString:[JsonParser jsonValueFromData:@"versions_url" :data]];
+    _versionsURL = [NSURL URLWithString:[JsonParser jsonValueFromData:@"versions_url" data:data]];
     
 }
 

@@ -25,7 +25,7 @@
 @property (nonatomic, copy) NSMutableArray *listingTitles;
 @property (nonatomic, copy) NSString *displayTitle;
 
--(id)initWithStats:(NSString *)title :(NSURL *)resourceURL :(int)idNumber :(NSString *)format;
+-(id)initWithStats:(NSString *)title resourceURL:(NSURL *)resourceURL idNum:(int)idNumber format:(NSString *)format;
 -(void)returnAllStats;
 
 @end

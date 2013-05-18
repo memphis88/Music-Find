@@ -21,7 +21,7 @@
 @property (nonatomic, copy) NSString *role;
 @property (nonatomic, copy) NSString *displayTitle;
 
--(id)initWithStats:(NSString *)title :(NSURL *)resourceURL :(int)idNumber;
+-(id)initWithStats:(NSString *)title resourceURL:(NSURL *)resourceURL idNum:(int)idNumber;
 -(void)returnAllStats;
 -(void)makeVersionsURL;
 

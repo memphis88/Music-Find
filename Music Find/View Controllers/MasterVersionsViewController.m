@@ -89,11 +89,11 @@
             [rDVC.theRelease setArtist:self.master.artist];
             [rDVC.theRelease setGenre:self.master.genre];
             NSData *data = [NSData dataWithContentsOfURL:rDVC.theRelease.resourceURL];
-            NSArray *images = [JsonParser jsonArrayFromData:@"images" :data];
+            NSArray *images = [JsonParser jsonArrayFromData:@"images" data:data];
             [rDVC setImages:images];
             rDVC.primaryImage = [NSURL URLWithString:[DataController primaryImage150FromJson:images]];
             [rDVC.mainImage setImage:rDVC.theRelease.primaryImage];
-            NSArray *tracklistArray = [JsonParser jsonArrayFromData:@"tracklist" :data];
+            NSArray *tracklistArray = [JsonParser jsonArrayFromData:@"tracklist" data:data];
             rDVC.theRelease.tracklist = [[NSMutableArray alloc] init];
             if (tracklistArray)
             {

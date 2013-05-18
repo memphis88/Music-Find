@@ -11,7 +11,7 @@
 @implementation Artist
 @synthesize name = _name, resourceURL = _resourceURL, idNumber = _idNumber, profile = _profile, releasesURL = _releasesURL;
 
--(id)initWithStats:(NSString *)title :(NSURL *)resourceURL :(int)idNumber
+-(id)initWithStats:(NSString *)title resourceURL:(NSURL *)resourceURL idNum:(int)idNumber
 {
     self = [super init];
     if (self)

@@ -27,13 +27,13 @@
 -(void)makeListing
 {
     NSData *data = [NSData dataWithContentsOfURL:_resourceURL];
-    _sleeveCondition = [JsonParser jsonValueFromData:@"sleeve_condition" :data];
-    _condition = [JsonParser jsonValueFromData:@"condition" :data];
-    _comments = [JsonParser jsonValueFromData:@"comments" :data];
-    _ships = [JsonParser jsonValueFromData:@"ships_from" :data];
-    NSArray *arr = [JsonParser jsonArrayFromData:@"seller" :data];
+    _sleeveCondition = [JsonParser jsonValueFromData:@"sleeve_condition" data:data];
+    _condition = [JsonParser jsonValueFromData:@"condition" data:data];
+    _comments = [JsonParser jsonValueFromData:@"comments" data:data];
+    _ships = [JsonParser jsonValueFromData:@"ships_from" data:data];
+    NSArray *arr = [JsonParser jsonArrayFromData:@"seller" data:data];
     _seller = [(NSDictionary *)arr objectForKey:@"username"];
-    NSArray *priceArr = [JsonParser jsonArrayFromData:@"price" :data];
+    NSArray *priceArr = [JsonParser jsonArrayFromData:@"price" data:data];
     NSString *tmp;
     if ([[(NSDictionary *)priceArr objectForKey:@"currency"] isEqualToString:@"EUR"])
     {
@@ -52,7 +52,7 @@
         tmp = [(NSDictionary *)priceArr objectForKey:@"currency"];
     }
     _price = [NSString stringWithFormat:@"%@ %@",[(NSDictionary *)priceArr objectForKey:@"value"],tmp];
-    _URI = [NSURL URLWithString:[JsonParser jsonValueFromData:@"uri" :data]];
+    _URI = [NSURL URLWithString:[JsonParser jsonValueFromData:@"uri" data:data]];
 }
 
 -(void)returnAllStats

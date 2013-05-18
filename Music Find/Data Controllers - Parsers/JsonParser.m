@@ -11,7 +11,7 @@
 
 @implementation JsonParser
 
-+ (NSString *)jsonValueFromData:(NSString *)key :(NSData *)data
++ (NSString *)jsonValueFromData:(NSString *)key data:(NSData *)data
 {
     if (data)
     {
@@ -44,7 +44,7 @@
     }
 }
 
-+ (NSArray *)jsonArrayFromData:(NSString *)key :(NSData *)data
++ (NSArray *)jsonArrayFromData:(NSString *)key data:(NSData *)data
 {
     if (data)
     {

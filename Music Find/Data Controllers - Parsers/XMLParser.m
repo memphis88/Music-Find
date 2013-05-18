@@ -10,7 +10,7 @@
 
 @implementation XMLParser
 
-- (id)initWithDelegate:(id)d :(NSURL *)u
+- (id)initWithDelegate:(id)d url:(NSURL *)u
 {
     self = [super init];
     delegate = d;

@@ -23,19 +23,19 @@
             NSDictionary *dic = [array objectAtIndex:i];
             if ([[dic objectForKey:@"type"] isEqualToString:@"artist"])
             {
-                Artist *art = [[Artist alloc] initWithStats:[dic objectForKey:@"title"] :[NSURL URLWithString:[dic objectForKey:@"resource_url"]] :[[dic objectForKey:@"id"] intValue]];
+                Artist *art = [[Artist alloc] initWithStats:[dic objectForKey:@"title"] resourceURL:[NSURL URLWithString:[dic objectForKey:@"resource_url"]] idNum:[[dic objectForKey:@"id"] intValue]];
                 art.imageURL = [dic objectForKey:@"thumb"];
                 [self.artists addObject:art];
                 //NSLog(@"%d",[[self artists] count]);
             }
             else if ([[dic objectForKey:@"type"] isEqualToString:@"release"])
             {
-                Release *rel = [[Release alloc] initWithStats:[dic objectForKey:@"title"] :[NSURL URLWithString:[dic objectForKey:@"resource_url"]] :[[dic objectForKey:@"id"] intValue]:[dic objectForKey:@"format"]];
+                Release *rel = [[Release alloc] initWithStats:[dic objectForKey:@"title"] resourceURL:[NSURL URLWithString:[dic objectForKey:@"resource_url"]] idNum:[[dic objectForKey:@"id"] intValue] format:[dic objectForKey:@"format"]];
                 [self.releases addObject:rel];
             }
             else if ([[dic objectForKey:@"type"] isEqualToString:@"master"])
             {
-                Master *mast = [[Master alloc] initWithStats:[dic objectForKey:@"title"] :[NSURL URLWithString:[dic objectForKey:@"resource_url"]] :[[dic objectForKey:@"id"] intValue]];
+                Master *mast = [[Master alloc] initWithStats:[dic objectForKey:@"title"] resourceURL:[NSURL URLWithString:[dic objectForKey:@"resource_url"]] idNum:[[dic objectForKey:@"id"] intValue]];
                 [self.masters addObject:mast];
             }
         }
@@ -56,7 +56,7 @@
             NSDictionary *dic = [array objectAtIndex:i];
             if ([[dic objectForKey:@"type"] isEqualToString:@"master"])
             {
-                Master *mast = [[Master alloc] initWithStats:[dic objectForKey:@"title"] :[NSURL URLWithString:[dic objectForKey:@"resource_url"]] :[[dic objectForKey:@"id"] intValue]];
+                Master *mast = [[Master alloc] initWithStats:[dic objectForKey:@"title"] resourceURL:[NSURL URLWithString:[dic objectForKey:@"resource_url"]] idNum:[[dic objectForKey:@"id"] intValue]];
                 [mast setRole:[dic objectForKey:@"role"]];
                 [result addObject:mast];
             }
@@ -76,7 +76,7 @@
             NSDictionary *dic = [array objectAtIndex:i];
             if ([[dic objectForKey:@"type"] isEqualToString:@"release"])
             {
-                Release *mast = [[Release alloc] initWithStats:[dic objectForKey:@"title"] :[NSURL URLWithString:[dic objectForKey:@"resource_url"]] :[[dic objectForKey:@"id"] intValue] :[dic objectForKey:@"format"]];
+                Release *mast = [[Release alloc] initWithStats:[dic objectForKey:@"title"] resourceURL:[NSURL URLWithString:[dic objectForKey:@"resource_url"]] idNum:[[dic objectForKey:@"id"] intValue] format:[dic objectForKey:@"format"]];
                 [mast setRole:[dic objectForKey:@"role"]];
                 [result addObject:mast];
             }
@@ -111,7 +111,7 @@
     NSMutableArray *result = [[NSMutableArray alloc] init];
     for (NSDictionary *dic in array)
     {
-        Release *rel = [[Release alloc] initWithStats:[dic objectForKey:@"title"] :[NSURL URLWithString:[dic objectForKey:@"resource_url"]] :[[dic objectForKey:@"id"] intValue] :[dic objectForKey:@"format"]];
+        Release *rel = [[Release alloc] initWithStats:[dic objectForKey:@"title"] resourceURL:[NSURL URLWithString:[dic objectForKey:@"resource_url"]] idNum:[[dic objectForKey:@"id"] intValue] format:[dic objectForKey:@"format"]];
         [rel setLabel:[dic objectForKey:@"label"]];
         [result addObject:rel];
         //NSLog(@"%@",dic);

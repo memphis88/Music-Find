@@ -18,6 +18,6 @@
 @property (nonatomic, copy) NSString *profile;
 @property int idNumber;
 
--(id)initWithStats:(NSString *)title :(NSURL *)resourceURL :(int)idNumber;
+-(id)initWithStats:(NSString *)title resourceURL:(NSURL *)resourceURL idNum:(int)idNumber;
 -(void)returnAllStats;
 @end

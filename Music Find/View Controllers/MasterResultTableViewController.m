@@ -66,7 +66,7 @@ dispatch_queue_t concurrentFetchQueue;
                 fetch = [NSArray arrayWithArray:tmp];
                 for (NSData *arrayData in fetch)
                 {
-                    NSArray *searchResult = [JsonParser jsonArrayFromData:@"results" :arrayData];
+                    NSArray *searchResult = [JsonParser jsonArrayFromData:@"results" data:arrayData];
                     [self.dataController artistAndReleaseFromJson:searchResult];
                 }
                 dispatch_async(dispatch_get_main_queue(), ^{
@@ -235,11 +235,11 @@ dispatch_queue_t concurrentFetchQueue;
             [mVVC setMaster:[self.dataController.masters objectAtIndex:[self.tableView indexPathForSelectedRow].row]];
             [mVVC.master makeVersionsURL];
             NSData *data = [NSData dataWithContentsOfURL:mVVC.master.versionsURL];
-            NSArray *versions = [JsonParser jsonArrayFromData:@"versions" :data];
+            NSArray *versions = [JsonParser jsonArrayFromData:@"versions" data:data];
             mVVC.releases = [[NSMutableArray alloc] initWithCapacity:[versions count]];
             [mVVC setReleases:[DataController versionsFromJson:versions]];
             data = [NSData dataWithContentsOfURL:mVVC.master.resourceURL];
-            NSArray *genres = [JsonParser jsonArrayFromData:@"genres" :data];
+            NSArray *genres = [JsonParser jsonArrayFromData:@"genres" data:data];
             NSMutableString *res = [[NSMutableString alloc] init];
             if ([genres count] > 1)
             {
@@ -266,11 +266,11 @@ dispatch_queue_t concurrentFetchQueue;
             ReleaseDetailsViewController *rDVC = [segue destinationViewController];
             [rDVC setTheRelease:[self.dataController.releases objectAtIndex:[self.tableView indexPathForSelectedRow].row]];
             NSData *data = [NSData dataWithContentsOfURL:rDVC.theRelease.resourceURL];
-            NSArray *images = [JsonParser jsonArrayFromData:@"images" :data];
+            NSArray *images = [JsonParser jsonArrayFromData:@"images" data:data];
             [rDVC setImages:images];
             rDVC.primaryImage = [NSURL URLWithString:[DataController primaryImage150FromJson:images]];
             [rDVC.mainImage setImage:rDVC.theRelease.primaryImage];
-            NSArray *tracklistArray = [JsonParser jsonArrayFromData:@"tracklist" :data];
+            NSArray *tracklistArray = [JsonParser jsonArrayFromData:@"tracklist" data:data];
             rDVC.theRelease.tracklist = [[NSMutableArray alloc] init];
             if (tracklistArray)
             {

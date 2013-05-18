@@ -21,6 +21,6 @@
     NSMutableString        *tmp;
 }
 
--(id)initWithDelegate:(id)d :(NSURL *)u;
+-(id)initWithDelegate:(id)d url:(NSURL *)u;
 
 @end

@@ -61,7 +61,7 @@
         dispatch_async(concurrentQueue, ^{
             ArtistReleasesViewController *aRVC = [segue destinationViewController];
             aRVC.artistName = self.artist.name;
-            self.artist.releasesURL = [NSURL URLWithString:[JsonParser jsonValueFromData:@"releases_url" :[NSData dataWithContentsOfURL:self.artist.resourceURL]]];
+            self.artist.releasesURL = [NSURL URLWithString:[JsonParser jsonValueFromData:@"releases_url" data:[NSData dataWithContentsOfURL:self.artist.resourceURL]]];
             NSData *reldata = [NSData dataWithContentsOfURL:self.artist.releasesURL];
             NSArray *releasesResult;
             aRVC.flag = @"all";
@@ -73,7 +73,7 @@
             aRVC.otherReleases = [[NSMutableArray alloc] init];
             if (![JsonParser paginationCheck:reldata])
             {
-                NSArray *all = [JsonParser jsonArrayFromData:@"releases" :reldata];
+                NSArray *all = [JsonParser jsonArrayFromData:@"releases" data:reldata];
                 aRVC.masters = [DataController mastersFromJson:all];
                 aRVC.releases = [DataController releasesFromJson:all];
                 for (Master *mast in aRVC.masters) {
@@ -103,7 +103,7 @@
             {
                 NSArray *pagedJSONData;
                 NSString *next;
-                if ([[[JsonParser jsonArrayFromData:@"pagination" :reldata] valueForKey:@"pages"] integerValue] <= 5)
+                if ([[[JsonParser jsonArrayFromData:@"pagination" data:reldata] valueForKey:@"pages"] integerValue] <= 5)
                 {
                     pagedJSONData = [JsonParser pagesFromData:reldata];
                 }
@@ -117,7 +117,7 @@
                 }
                 for (NSData *arrayData in pagedJSONData)
                 {
-                    releasesResult = [JsonParser jsonArrayFromData:@"releases" :arrayData];
+                    releasesResult = [JsonParser jsonArrayFromData:@"releases" data:arrayData];
                     [aRVC.masters addObjectsFromArray:[DataController mastersFromJson:releasesResult]];
                     [aRVC.releases addObjectsFromArray:[DataController releasesFromJson:releasesResult]];
                 }
@@ -153,7 +153,7 @@
     {
         dispatch_async(concurrentQueue, ^{
             ReleaseImagesViewController *rIVC = [segue destinationViewController];
-            [rIVC setImages:[JsonParser jsonArrayFromData:@"images" :[NSData dataWithContentsOfURL:self.artist.resourceURL]]];
+            [rIVC setImages:[JsonParser jsonArrayFromData:@"images" data:[NSData dataWithContentsOfURL:self.artist.resourceURL]]];
             NSLog(@"%@",rIVC.images);
             rIVC.imagesData = [[NSMutableArray alloc] initWithCapacity:rIVC.images.count];
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -200,7 +200,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if ((self.artist.links = [JsonParser jsonArrayFromData:@"urls" :[NSData dataWithContentsOfURL:self.artist.resourceURL]]))
+    if ((self.artist.links = [JsonParser jsonArrayFromData:@"urls" data:[NSData dataWithContentsOfURL:self.artist.resourceURL]]))
     {
         return 4;
     }

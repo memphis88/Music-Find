@@ -104,7 +104,7 @@
         NSData *data = [NSData dataWithContentsOfURL:url];
         if (![JsonParser paginationCheck:data])
         {
-            NSArray *searchResult = [JsonParser jsonArrayFromData:@"results" :data];
+            NSArray *searchResult = [JsonParser jsonArrayFromData:@"results" data:data];
             if ([searchResult count]>0)
             {
                 [self setDataC:[[DataController alloc] init]];
@@ -124,7 +124,7 @@
             [self setDataC:[[DataController alloc] init]];
             NSArray *pagedJSONData;
             NSString *next;
-            if ([[[JsonParser jsonArrayFromData:@"pagination" :data] valueForKey:@"pages"] integerValue] <= 5)
+            if ([[[JsonParser jsonArrayFromData:@"pagination" data:data] valueForKey:@"pages"] integerValue] <= 5)
             {
                 pagedJSONData = [JsonParser pagesFromData:data];
             }
@@ -138,7 +138,7 @@
             }
             for (NSData *arrayData in pagedJSONData)
             {
-                NSArray *searchResult = [JsonParser jsonArrayFromData:@"results" :arrayData];
+                NSArray *searchResult = [JsonParser jsonArrayFromData:@"results" data:arrayData];
                 [[self dataC] artistAndReleaseFromJson:searchResult];
             }
             [self performSegueWithIdentifier:@"searchReturned" sender:next];
