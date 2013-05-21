@@ -14,6 +14,10 @@
 @implementation DataController
 @synthesize artists = _artists, releases = _releases, masters = _masters;
 
+/*
+ * Μέθοδος που παίρνει ως όρισμα πίνακα δεδομένων JSON και δημιουργεί αντικείμενα τύπου Artist, Master και Release τα οποία πρστίθενται στους αντίστοιχους πίνακες της κλάσης.
+ */
+
 - (void)artistAndReleaseFromJson:(NSArray *)array
 {
     if (array)
@@ -46,6 +50,10 @@
     }
 }
 
+/*
+ * Μέθοδος που παίρνει ως όρισμα πίνακα δεδομένων JSON και επιστρέφει πίνακα αντικειμένων τύπου Master.
+ */
+
 + (NSMutableArray *)mastersFromJson:(NSArray *)array
 {
     NSMutableArray *result = [[NSMutableArray alloc] init];
@@ -65,6 +73,10 @@
     }
     return nil;
 }
+
+/*
+ * Μέθοδος που παίρνει ως όρισμα πίνακα δεδομένων JSON και επιστρέφει πίνακα αντικειμένων τύπου Release.
+ */
 
 + (NSMutableArray *)releasesFromJson:(NSArray *)array
 {
@@ -86,6 +98,10 @@
     return nil;
 }
 
+/*
+ * Μέθοδος που παίρνει ως όρισμα πίνακα δεδομένων JSON και το URL της προεπιλεγμένης "μικρής" εικόνας απο την οντότητα (150 pixels). Αν δεν υπάρχει προεπιλεγμένη, παίρνει την πρώτη στη σειρά.
+ */
+
 + (NSString *)primaryImage150FromJson:(NSArray *)array
 {
     if (array)
@@ -106,6 +122,10 @@
     }
 }
 
+/*
+ * Μέθοδος που παίρνει ως όρισμα πίνακα δεδομένων JSON και επιστρέφει πίνακα αντικειμένων τύπου Release. Χρησιμοποιήται κατά τη δημιουργία του πίνακα με τις διαφορετικές εκδόσεις της κυκλοφορίας (απο Master release).
+ */
+
 + (NSMutableArray *)versionsFromJson:(NSArray *)array
 {
     NSMutableArray *result = [[NSMutableArray alloc] init];
@@ -118,6 +138,10 @@
     }
     return result;
 }
+
+/*
+ * Μέθοδος που παίρνει ως όρισμα πίνακα δεδομένων JSON και επιστρέφει πίνακα με πληροφορίες της λίστας των τραγουδιών της κυκλοφορίας.
+ */
 
 + (NSMutableArray *)returnTrackList:(NSDictionary *)dic
 {
@@ -132,6 +156,10 @@
     return nil;
 }
 
+/*
+ * Κατασκευαστής της κλάσης, αρχικοποίηση πινάκων.
+ */
+
 - (id)init
 {
     self = [super init];
@@ -145,6 +173,10 @@
     return nil;
 }
 
+/*
+ * Override του προεπιλεγμένου Setter διότι στην προεπιλογή η αντιγραφή του πίνακα στην ιδιότητα δεν είναι Mutable.
+ */
+
 -(void)setArtists:(NSMutableArray *)artists
 {
     if (_artists != artists)
@@ -153,6 +185,10 @@
     }
 }
 
+/*
+ * Override του προεπιλεγμένου Setter διότι στην προεπιλογή η αντιγραφή του πίνακα στην ιδιότητα δεν είναι Mutable.
+ */
+
 -(void)setReleases:(NSMutableArray *)releases
 {
     if (_releases != releases)
@@ -160,6 +196,11 @@
         _releases = [releases mutableCopy];
     }
 }
+
+/*
+ * Override του προεπιλεγμένου Setter διότι στην προεπιλογή η αντιγραφή του πίνακα στην ιδιότητα δεν είναι Mutable.
+ */
+
 -(void)setMasters:(NSMutableArray *)masters
 {
     if (_masters != masters)
@@ -167,6 +208,10 @@
         _masters = [masters mutableCopy];
     }
 }
+
+/*
+ * Μέθοδος που μετράει το πλήθος κατηγοριών απο τα επιστρεφόμενα αποτελέσματα (μεταξύ 0,1,2 και 3).
+ */
 
 -(int)sectionCount
 {

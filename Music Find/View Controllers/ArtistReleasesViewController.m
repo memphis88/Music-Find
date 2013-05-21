@@ -24,6 +24,9 @@ dispatch_queue_t concurrentFetchQueue;
 
 @implementation ArtistReleasesViewController
 
+/*
+ * Κατασκευαστής για τη χρήση αρχείων Nib
+ */
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -34,6 +37,10 @@ dispatch_queue_t concurrentFetchQueue;
     return self;
 }
 
+/*
+ * Override του προεπιλεγμένου Setter διότι στην προεπιλογή η αντιγραφή του πίνακα στην ιδιότητα δεν είναι Mutable.
+ */
+
 -(void)setMasters:(NSMutableArray *)masters
 {
     if (_masters!=masters)
@@ -42,6 +49,10 @@ dispatch_queue_t concurrentFetchQueue;
     }
 }
 
+/*
+ * Override του προεπιλεγμένου Setter διότι στην προεπιλογή η αντιγραφή του πίνακα στην ιδιότητα δεν είναι Mutable.
+ */
+
 -(void)setReleases:(NSMutableArray *)releases
 {
     if (_releases!=releases)
@@ -49,6 +60,11 @@ dispatch_queue_t concurrentFetchQueue;
         _releases = [releases mutableCopy];
     }
 }
+
+/*
+ * Override του προεπιλεγμένου Setter διότι στην προεπιλογή η αντιγραφή του πίνακα στην ιδιότητα δεν είναι Mutable.
+ */
+
 -(void)setMainMasters:(NSMutableArray *)mainMasters
 {
     if (_mainMasters!=mainMasters)
@@ -56,6 +72,10 @@ dispatch_queue_t concurrentFetchQueue;
         _mainMasters = [mainMasters mutableCopy];
     }
 }
+
+/*
+ * Override του προεπιλεγμένου Setter διότι στην προεπιλογή η αντιγραφή του πίνακα στην ιδιότητα δεν είναι Mutable.
+ */
 
 -(void)setMainReleases:(NSMutableArray *)mainReleases
 {
@@ -65,6 +85,10 @@ dispatch_queue_t concurrentFetchQueue;
     }
 }
 
+/*
+ * Override του προεπιλεγμένου Setter διότι στην προεπιλογή η αντιγραφή του πίνακα στην ιδιότητα δεν είναι Mutable.
+ */
+
 -(void)setOtherMasters:(NSMutableArray *)otherMasters
 {
     if (_otherMasters!=otherMasters)
@@ -72,6 +96,10 @@ dispatch_queue_t concurrentFetchQueue;
         _otherMasters = [otherMasters mutableCopy];
     }
 }
+
+/*
+ * Override του προεπιλεγμένου Setter διότι στην προεπιλογή η αντιγραφή του πίνακα στην ιδιότητα δεν είναι Mutable.
+ */
 
 -(void)setOtherReleases:(NSMutableArray *)otherReleases
 {
@@ -81,15 +109,28 @@ dispatch_queue_t concurrentFetchQueue;
     }
 }
 
+/*
+ * Μέθοδος που καλείται κατα τη φόρτωση του ελεγκτή στη μνήμη. Ορισμός του τίτλου στο Navigation Panel.
+ */
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     self.navigationItem.title = self.artistName;
 }
+
+/*
+ * Μέθοδος που καλείται όταν η συσκευή δώσει σήμα ειδοποίησης για γέμισμα της μνήμης.
+ */
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
 }
+
+/*
+ * Μέθοδος που συνεχίζει τη φόρτωση των αποτελεσμάτων απο τις σελίδες
+ */
 
 -(void)continueFetch:(NSString *)next
 {
@@ -154,6 +195,10 @@ dispatch_queue_t concurrentFetchQueue;
 
 #pragma mark - Table view data source
 
+/*
+ * Μέθοδος που καλείται κατα την κατασκευή του πίνακα. Επιστρέφει τον τίτλο της κεφαλίδας για κάθε κατηγορία του πίνακα.
+ */
+
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     if (section==0)
@@ -169,6 +214,10 @@ dispatch_queue_t concurrentFetchQueue;
         return nil;
     }
 }
+
+/*
+ * Μέθοδος που επιστρέφει το πλήθος των κεφαλίδων του πίνακα.
+ */
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -187,9 +236,12 @@ dispatch_queue_t concurrentFetchQueue;
     }
 }
 
+/*
+ * Μέθοδος που επιστρέφει το πλήθος των γραμμών του πίνακα ανα κατηγορία.
+ */
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // Return the number of rows in the section.
     if ([self.flag isEqualToString:@"all"])
     {
         if (section==0)
@@ -238,6 +290,10 @@ dispatch_queue_t concurrentFetchQueue;
     return 0;
 }
 
+/*
+ * Μέθοδος που επιστρέφει το κελί για κάθε γραμμή του πίνακα ανα κατηγορία.
+ */
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
@@ -281,6 +337,10 @@ dispatch_queue_t concurrentFetchQueue;
 
 #pragma mark - Table view delegate
 
+/*
+ * Μέθοδος που καλείται όταν η επιλεχθεί κάποιο κελί απο τον πίνακα.
+ */
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [SVProgressHUD showWithStatus:@"Loading..." maskType:SVProgressHUDMaskTypeBlack];
@@ -318,6 +378,10 @@ dispatch_queue_t concurrentFetchQueue;
         }
     }
 }
+
+/*
+ * Μέθοδος προετοιμασίας αλλαγής οθόνης. Ανάθεση ελεγκτή και απαραίτητων παραμέτρων.
+ */
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -408,17 +472,29 @@ dispatch_queue_t concurrentFetchQueue;
     });
 }
 
+/*
+ * Μέθοδος που καλείται όταν αποφορτωθεί ο ελεγκτής απο τη μνήμη.
+ */
+
 -(void)viewDidDisappear:(BOOL)animated
 {
     self.stopFetch = YES;
     dispatch_suspend(concurrentFetchQueue);
 }
 
+/*
+ * Μέθοδος που καλείται όταν επιλεχθεί το κουμπί των ρόλων. Εμφάνιση του επιλογέα ρόλων (All Roles, Main Roles, Other Roles)
+ */
+
 - (IBAction)showActionSheet:(id)sender
 {
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Choose a role to display:" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"All roles",@"Main roles",@"Other roles", nil];
     [actionSheet showInView:self.view];
 }
+
+/*
+ * Μέθοδος που καλείται όταν επιλεχθεί κάποιος ρόλος, ενημέρωση πίνακα ανάλογα με την επιλογή.
+ */
 
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {

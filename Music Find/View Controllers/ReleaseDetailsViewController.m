@@ -19,6 +19,10 @@
 
 @implementation ReleaseDetailsViewController
 
+/*
+ * Κατασκευαστής για τη χρήση αρχείων Nib
+ */
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -27,6 +31,10 @@
     }
     return self;
 }
+
+/*
+ * Μέθοδος που καλείται κατα τη φόρτωση του ελεγκτή στη μνήμη. Κλήση απαραίτητων μεθόδων για την υλοποίηση του πίνακα.
+ */
 
 - (void)viewDidLoad
 {
@@ -37,6 +45,10 @@
     [self.tableView setDelegate:self];
     [self.tableView sizeToFit];
 }
+
+/*
+ * Μέθοδος που επιστρέφει το κελί για κάθε γραμμή του πίνακα ανα κατηγορία.
+ */
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -55,16 +67,28 @@
     return cell;
 }
 
+/*
+ * Μέθοδος που επιστρέφει το ύψος του κελιού του πίνακα ανα γραμμή ανα κατηγορία.
+ */
+
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 36.0f;
 }
+
+/*
+ * Μέθοδος που καλείται όταν η συσκευή δώσει σήμα ειδοποίησης για γέμισμα της μνήμης.
+ */
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+/*
+ * Μέθοδος που καλείται πατηθεί το κουμπί "Search Market". Δημιουργία αντικειμένου XMLParser για την ανάλυση των δεδομένων XML.
+ */
 
 - (IBAction)searchMarket:(id)sender
 {
@@ -75,27 +99,45 @@
     [self.searchButton setHidden:YES];
 }
 
+/*
+ * Μέθοδος που καλείται όταν πατηθεί η εικόνα και υπάρχουν περισσότερες φωτογραφίες προς εμφάνιση.
+ */
+
 -(void)moreImages
 {
     [self performSegueWithIdentifier:@"ReleaseImagesSegue" sender:self];
 }
+
+/*
+ * Μέθοδος που καλείται κατα την κατασκευή του πίνακα. Επιστρέφει τον τίτλο της κεφαλίδας για κάθε κατηγορία του πίνακα.
+ */
 
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     return @"Tracklist";
 }
 
+/*
+ * Μέθοδος που επιστρέφει το πλήθος των κεφαλίδων του πίνακα.
+ */
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
 }
 
+/*
+ * Μέθοδος που επιστρέφει το πλήθος των γραμμών του πίνακα ανα κατηγορία.
+ */
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return self.theRelease.tracklist.count;
 }
+
+/*
+ * Μέθοδος που καλείται κατα την προεταοιμασία του ελεγτκή για την προετοιμασία της οθόνης.
+ */
 
 -(void)updateUI
 {
@@ -129,6 +171,10 @@
     self.spinner.center = CGPointMake(self.searchButton.center.x, self.searchButton.center.y);
 }
 
+/*
+ * Μέθοδος προετοιμασίας αλλαγής οθόνης. Ανάθεση ελεγκτή και απαραίτητων παραμέτρων.
+ */
+
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([[segue identifier] isEqualToString:@"ReleaseImagesSegue"])
@@ -146,10 +192,18 @@
     }
 }
 
+/*
+ * Μέθοδος που καλείται απο την κλάση XMLParser, "τραβάει" τους τίτλους απο τα δεδομένα XML.
+ */
+
 - (void)parseTitles:(NSMutableArray *)result
 {
     [self.theRelease setListingTitles:result];
 }
+
+/*
+ * Μέθοδος που καλείται απο την κλάση XMLParser, "τραβάει" τα ID απο τα δεδομένα XML.
+ */
 
 - (void)parseIDs:(NSMutableString *)result
 {

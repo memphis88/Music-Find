@@ -23,7 +23,9 @@
 
 @implementation SearchViewController
 
-//@synthesize auth = _auth;
+/*
+ * Κατασκευαστής για τη χρήση αρχείων Nib
+ */
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -33,6 +35,10 @@
     }
     return self;
 }
+
+/*
+ * Μέθοδος που καλείται κατα τη φόρτωση του ελεγκτή στη μνήμη. Κλήση μεθόδων για τον έλεγχο της κατάστασης του δικτύου.
+ */
 
 - (void)viewDidLoad
 {
@@ -45,11 +51,19 @@
     [hostReachable startNotifier];
 }
 
+/*
+ * Μέθοδος που καλείται όταν η συσκευή δώσει σήμα ειδοποίησης για γέμισμα της μνήμης.
+ */
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+/*
+ * Μέθοδος που καλείται κατα την αποφόρτωση του ελεγκτή απο τη μνήμη.
+ */
 
 - (void)viewDidUnload
 {
@@ -59,9 +73,13 @@
     [self setSearchButton:nil];
     [super viewDidUnload];
 }
+
+/*
+ * Μέθοδος εκκίνησης διαδικασίας αναζήτησης, καλείται κατα το πάτημα του κουμπιού "Search". Κλήση μεθόδου αναζήτησης στο υπόβαθρο.
+ */
+
 - (IBAction)searchString:(id)sender
 {
-    //[self.spinner startAnimating];
     if ([self.queryText.text length] > 0)
     {
         [SVProgressHUD showWithStatus:@"Loading..." maskType:SVProgressHUDMaskTypeBlack];
@@ -73,6 +91,10 @@
         self.searchLabel.text = @"Please type an argument";
     }
 }
+
+/*
+ * Μέθοδος που υλοποιεί την αναζήτηση.
+ */
 
 -(void)parallelAction
 {
@@ -147,11 +169,19 @@
     }
 }
 
+/*
+ * Μέθοδος που καλείται όταν πατηθεί το κουμπί "Search" απο το πληκτρολόγιο της εισαγωγής.
+ */
+
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
     [searchBar resignFirstResponder];
     [self searchString:self];
 }
+
+/*
+ * Μέθοδος προετοιμασίας αλλαγής οθόνης. Ανάθεση ελεγκτή και απαραίτητων παραμέτρων.
+ */
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -170,6 +200,10 @@
         [self.searchButton setHidden:NO];
     }
 }
+
+/*
+ * Μέθοδος ελέγχου συνδεσημότητας με το διαδύκτιο και τον εξυπηρετητή.
+ */
 
 -(void)checkNetworkStatus:(NSNotification *)notice
 {
@@ -236,10 +270,18 @@
     }
 }
 
+/*
+ * Μέθοδος που καλείται όταν πατηθεί οποιοδήποτε στοιχείο στην οθόνη που δεν "ακούει" σε κάποιο συμβάν. Σκοπός της μεθόδου είναι να αποσύρει το πληκτρολόγιο εισαγωγής.
+ */
+
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [self.view endEditing:YES];
 }
+
+/*
+ * Μέθοδος που καλείται όταν αποφορτωθεί ο ελεγκτής απο τη μνήμη.
+ */
 
 -(void)dealloc
 {

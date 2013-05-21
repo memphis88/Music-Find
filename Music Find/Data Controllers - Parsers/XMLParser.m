@@ -10,6 +10,10 @@
 
 @implementation XMLParser
 
+/*
+ * Κατασκευαστής, αρχικοποίηση απαραιτήτων αντικειμένων και δημιουργία νήματος.
+ */
+
 - (id)initWithDelegate:(id)d url:(NSURL *)u
 {
     self = [super init];
@@ -23,6 +27,10 @@
     [myThread start];
 	return self;
 }
+
+/*
+ * Μέθοδος που θα τρέχει στο καινούριο νήμα. Καλεί τις μεθόδους parse για εκκίνηση της ανάλυσης των δεδομένων XML και έπειτα καλεί τις μεθόδους στην κλάση-αντιπρόσωπο που θα χειριστεί τα αποτελέσματα.
+ */
 
 - (void)run:(id)param
 {
@@ -39,6 +47,10 @@
                        withObject: outstring waitUntilDone:NO];
 }
 
+/*
+ * Μέθοδος που καλείται κατα τον εντοπισμό νέου tag.
+ */
+
 - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName
   namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
     attributes:(NSDictionary *)attributeDict
@@ -51,6 +63,10 @@
     }
 }
 
+/*
+ * Μέθοδος που καλείται κατα το τέλος του tag.
+ */
+
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName
   namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName {
 	if ([current isEqualToString:@"id"]) [outstring appendFormat:@"%@", @"\n"];
@@ -60,6 +76,10 @@
     }
     current = nil;
 }
+
+/*
+ * Μέθοδος που καλείται για την ανάλυση του περιεχομένου του tag.
+ */
 
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string {
 	if (!current) return;

@@ -15,6 +15,10 @@
 
 @implementation LargeImageViewController
 
+/*
+ * Κατασκευαστής για τη χρήση αρχείων Nib
+ */
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -23,6 +27,10 @@
     }
     return self;
 }
+
+/*
+ * Μέθοδος που καλείται κατα τη φόρτωση του ελεγκτή στη μνήμη. Κλήση απαραίτητων μεθόδων για αρχικοποίηση του zoom.
+ */
 
 - (void)viewDidLoad
 {
@@ -46,16 +54,28 @@
     
 }
 
+/*
+ * Μέθοδος που επιστρέφει το αντικείμενο που θα γίνεται zoom.
+ */
+
 -(UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
 {
     return self.imageView;
 }
+
+/*
+ * Μέθοδος που καλείται όταν η συσκευή δώσει σήμα ειδοποίησης για γέμισμα της μνήμης.
+ */
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+/*
+ * Μέθοδος που καλείται όταν αποφορτωθεί ο ελεγκτής απο τη μνήμη.
+ */
 
 - (void)viewDidUnload
 {

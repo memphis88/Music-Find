@@ -12,6 +12,10 @@
 
 @synthesize title = _title, resourceURL = _resourceURL, idNumber = _idNumber;
 
+/*
+ * Κατασκευαστής
+ */
+
 -(id)initWithStats:(NSString *)title resourceURL:(NSURL *)resourceURL idNum:(int)idNumber format:(NSString *)format
 {
     self = [super init];
@@ -26,10 +30,18 @@
     return nil;
 }
 
+/*
+ * Μέθοδος debugging.
+ */
+
 -(void)returnAllStats
 {
     NSLog(@"release title: %@\nresource: %@ \nid: %d", [self title], [self resourceURL], [self idNumber]);
 }
+
+/*
+ * Override του προεπιλεγμένου Setter διότι στην προεπιλογή η αντιγραφή του πίνακα στην ιδιότητα δεν είναι Mutable.
+ */
 
 -(void)setTracklist:(NSMutableArray *)tracklist
 {
@@ -39,6 +51,10 @@
     }
 }
 
+/*
+ * Override του προεπιλεγμένου Setter διότι στην προεπιλογή η αντιγραφή του πίνακα στην ιδιότητα δεν είναι Mutable.
+ */
+
 -(void)setListings:(NSMutableArray *)listings
 {
     if (_listings != listings)
@@ -46,6 +62,10 @@
         _listings = [listings mutableCopy];
     }
 }
+
+/*
+ * Override του προεπιλεγμένου Setter διότι στην προεπιλογή η αντιγραφή του πίνακα στην ιδιότητα δεν είναι Mutable.
+ */
 
 -(void)setListingTitles:(NSMutableArray *)listingTitles
 {

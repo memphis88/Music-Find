@@ -13,6 +13,10 @@
 
 @synthesize price = _price, sleeveCondition = _sleeveCondition, condition = _condition, comments = _comments, ships = _ships, resourceURL = _resourceURL;
 
+/*
+ * Κατασκευαστής.
+ */
+
 -(id)initWithURL:(NSURL *)url
 {
     self = [super init];
@@ -23,6 +27,10 @@
     }
     return nil;
 }
+
+/*
+ * Μέθοδος φόρτωσης δεδομένων της αγγελίας. Παραμετροποίηση τιμών.
+ */
 
 -(void)makeListing
 {
@@ -54,6 +62,10 @@
     _price = [NSString stringWithFormat:@"%@ %@",[(NSDictionary *)priceArr objectForKey:@"value"],tmp];
     _URI = [NSURL URLWithString:[JsonParser jsonValueFromData:@"uri" data:data]];
 }
+
+/*
+ * Μέθοδος debugging.
+ */
 
 -(void)returnAllStats
 {

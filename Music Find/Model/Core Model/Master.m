@@ -13,6 +13,10 @@
 
 @synthesize title = _title, resourceURL = _resourceURL, idNumber = _idNumber, tracklist = _tracklist;
 
+/*
+ * Κατασκευαστής.
+ */
+
 -(id)initWithStats:(NSString *)title resourceURL:(NSURL *)resourceURL idNum:(int)idNumber
 {
     self = [super init];
@@ -26,6 +30,10 @@
     return nil;
 }
 
+/*
+ * Φόρτωση υπερσυνδέσμου ανακατεύθηνσης στις εκδόσεις της κυκλοφορίας.
+ */
+
 -(void)makeVersionsURL
 {
     NSData *data = [NSData dataWithContentsOfURL:self.resourceURL];
@@ -33,10 +41,18 @@
     
 }
 
+/*
+ * Μέθοδος debugging.
+ */
+
 -(void)returnAllStats
 {
     NSLog(@"release title: %@\nresource: %@ \nid: %d", [self title], [self resourceURL], [self idNumber]);
 }
+
+/*
+ * Override του προεπιλεγμένου Setter διότι στην προεπιλογή η αντιγραφή του πίνακα στην ιδιότητα δεν είναι Mutable.
+ */
 
 -(void)setTracklist:(NSMutableArray *)tracklist
 {

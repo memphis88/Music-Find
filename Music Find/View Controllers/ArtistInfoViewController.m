@@ -24,6 +24,10 @@
 
 @implementation ArtistInfoViewController
 
+/*
+ * Κατασκευαστής για τη χρήση αρχείων Nib
+ */
+
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -33,10 +37,18 @@
     return self;
 }
 
+/*
+ * Μέθοδος που καλείται κατα τη φόρτωση του ελεγκτή στη μνήμη.
+ */
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 }
+
+/*
+ * Μέθοδος προετοιμασίας αλλαγής οθόνης. Ανάθεση ελεγκτή και απαραίτητων παραμέτρων.
+ */
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -177,6 +189,10 @@
     }
 }
 
+/*
+ * Μέθοδος που καλείται όταν η επιλεχθεί κάποιο κελί απο τον πίνακα.
+ */
+
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [SVProgressHUD showWithStatus:@"Loading..." maskType:SVProgressHUDMaskTypeBlack];
@@ -198,6 +214,10 @@
     }
 }
 
+/*
+ * Μέθοδος που επιστρέφει το πλήθος των κεφαλίδων του πίνακα.
+ */
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if ((self.artist.links = [JsonParser jsonArrayFromData:@"urls" data:[NSData dataWithContentsOfURL:self.artist.resourceURL]]))
@@ -210,6 +230,10 @@
     }
 }
 
+/*
+ * Μέθοδος που φορτώνει την εικόνα του καλλιτέχνη.
+ */
+
 - (void)loadImageFromURL:(NSData *)data
 {
     [self.imageIndicator startAnimating];
@@ -217,11 +241,19 @@
     [self.imageIndicator stopAnimating];
 }
 
+/*
+ * Μέθοδος που καλείται όταν η συσκευή δώσει σήμα ειδοποίησης για γέμισμα της μνήμης.
+ */
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+/*
+ * Μέθοδος που καλείται όταν αποφορτωθεί ο ελεγκτής απο τη μνήμη.
+ */
 
 - (void)viewDidUnload {
     [self setArtistThumb:nil];

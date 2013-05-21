@@ -16,6 +16,10 @@
 
 @implementation ListingViewController
 
+/*
+ * Κατασκευαστής για τη χρήση αρχείων Nib
+ */
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -24,6 +28,10 @@
     }
     return self;
 }
+
+/*
+ * Μέθοδος που καλείται κατα τη φόρτωση του ελεγκτή στη μνήμη. Παραμετροποίηση του GUI.
+ */
 
 - (void)viewDidLoad
 {
@@ -59,10 +67,18 @@
     self.scrollView.contentSize = CGSizeMake(320, (self.discogsButton.frame.origin.y + self.discogsButton.frame.size.height) + 50);
 }
 
+/*
+ * Μέθοδος που καλείται όταν η συσκευή δώσει σήμα ειδοποίησης για γέμισμα της μνήμης.
+ */
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
 }
+
+/*
+ * Μέθοδος που καλείται όταν αποφορτωθεί ο ελεγκτής απο τη μνήμη.
+ */
 
 - (void)viewDidUnload {
     [self setArtistRelease:nil];
@@ -79,6 +95,11 @@
     [self setDiscogsButton:nil];
     [super viewDidUnload];
 }
+
+/*
+ * Μέθοδος που καλείται όταν πατηθεί το κουμπί "View In discogs.com" το οποίο παραπέμπει στην αντίστοιχη σελίδα της αγγελίας στο φυλομετρητή της συσκευής.
+ */
+
 - (IBAction)viewInDiscogs:(id)sender
 {
     [[UIApplication sharedApplication] openURL:self.theListing.URI];

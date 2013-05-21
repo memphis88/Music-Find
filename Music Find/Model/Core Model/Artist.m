@@ -11,6 +11,10 @@
 @implementation Artist
 @synthesize name = _name, resourceURL = _resourceURL, idNumber = _idNumber, profile = _profile, releasesURL = _releasesURL;
 
+/*
+ * Κατασκευαστής
+ */
+
 -(id)initWithStats:(NSString *)title resourceURL:(NSURL *)resourceURL idNum:(int)idNumber
 {
     self = [super init];
@@ -23,6 +27,10 @@
     }
     return nil;
 }
+
+/*
+ * Μέθοδος debugging
+ */
 
 -(void)returnAllStats
 {

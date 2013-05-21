@@ -16,6 +16,10 @@
 
 @implementation ReleaseImagesViewController
 
+/*
+ * Κατασκευαστής για τη χρήση αρχείων Nib
+ */
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -25,20 +29,36 @@
     return self;
 }
 
+/*
+ * Μέθοδος που καλείται κατα τη φόρτωση του ελεγκτή στη μνήμη.
+ */
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 }
+
+/*
+ * Μέθοδος που επιστρέφει το πλήθος των κατηγοριών του πίνακα.
+ */
 
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
     return 1;
 }
 
+/*
+ * Μέθοδος που επιστρέφει το πλήθος των αντικειμένων του πίνακα ανα κατηγορία.
+ */
+
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     return self.images.count;
 }
+
+/*
+ * Μέθοδος που επιστρέφει το κελί για κάθε στοιχείο του πίνακα ανα κατηγορία.
+ */
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -61,6 +81,10 @@
     return cell;
 }
 
+/*
+ * Μέθοδος που καλείται όταν η επιλεχθεί κάποιο κελί απο τον πίνακα.
+ */
+
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     [self.collectionView deselectItemAtIndexPath:indexPath animated:YES];
@@ -68,6 +92,10 @@
     //NSLog(@"row: %d, url:%@", indexPath.row, url);
     [self performSegueWithIdentifier:@"LargeImage" sender:url];
 }
+
+/*
+ * Μέθοδος προετοιμασίας αλλαγής οθόνης. Ανάθεση ελεγκτή και απαραίτητων παραμέτρων.
+ */
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -77,6 +105,10 @@
         lIVC.imageURL = sender;
     }
 }
+
+/*
+ * Μέθοδος που καλείται όταν η συσκευή δώσει σήμα ειδοποίησης για γέμισμα της μνήμης.
+ */
 
 - (void)didReceiveMemoryWarning
 {

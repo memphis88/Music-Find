@@ -20,6 +20,10 @@
 
 @implementation MasterVersionsViewController
 
+/*
+ * Κατασκευαστής για τη χρήση αρχείων Nib
+ */
+
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -29,15 +33,18 @@
     return self;
 }
 
+/*
+ * Μέθοδος που καλείται κατα τη φόρτωση του ελεγκτή στη μνήμη.
+ */
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
+
+/*
+ * Μέθοδος που καλείται όταν η συσκευή δώσει σήμα ειδοποίησης για γέμισμα της μνήμης.
+ */
 
 - (void)didReceiveMemoryWarning
 {
@@ -47,17 +54,29 @@
 
 #pragma mark - Table view data source
 
+/*
+ * Μέθοδος που επιστρέφει το πλήθος των κεφαλίδων του πίνακα.
+ */
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
     return 1;
 }
 
+/*
+ * Μέθοδος που επιστρέφει το πλήθος των γραμμών του πίνακα ανα κατηγορία.
+ */
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
     return self.releases.count;
 }
+
+/*
+ * Μέθοδος που επιστρέφει το κελί για κάθε γραμμή του πίνακα ανα κατηγορία.
+ */
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -72,11 +91,19 @@
 
 #pragma mark - Table view delegate
 
+/*
+ * Μέθοδος που καλείται όταν η επιλεχθεί κάποιο κελί απο τον πίνακα.
+ */
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [SVProgressHUD showWithStatus:@"Loading..." maskType:SVProgressHUDMaskTypeBlack];
     [self performSegueWithIdentifier:@"VersionReleaseInfo" sender:self];
 }
+
+/*
+ * Μέθοδος προετοιμασίας αλλαγής οθόνης. Ανάθεση ελεγκτή και απαραίτητων παραμέτρων.
+ */
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -120,6 +147,10 @@
         }
     });
 }
+
+/*
+ * Override του προεπιλεγμένου Setter διότι στην προεπιλογή η αντιγραφή του πίνακα στην ιδιότητα δεν είναι Mutable.
+ */
 
 -(void)setReleases:(NSMutableArray *)releases
 {

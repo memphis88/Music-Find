@@ -27,6 +27,10 @@ dispatch_queue_t concurrentFetchQueue;
 
 @synthesize dataController = _dataController, query = _query;
 
+/*
+ * Κατασκευαστής για τη χρήση αρχείων Nib
+ */
+
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -35,21 +39,25 @@ dispatch_queue_t concurrentFetchQueue;
     }
     return self;
 }
+
+/*
+ * Μέθοδος που καλείται όταν πατηθεί το κουμπί "New Search". Φόρτωση αρχικής αναζήτησης και παύση της ουράς φόρτωσης αποτελεσμάτων.
+ */
+
 - (IBAction)newSearchClicked:(id)sender
 {
     self.stopFetch = YES;
     dispatch_suspend(concurrentFetchQueue);
 }
 
+/*
+ * Μέθοδος που καλείται κατα τη φόρτωση του ελεγκτή στη μνήμη. Φόρτωση επιπλέον αποτελεσμάτων αναζήτησης εάν υπάρχουν σελίδες προς φόρτωση.
+ */
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     [[self queryLabel] setText:[NSString stringWithFormat:@"You typed: %@", [self query]]];
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    //better
     concurrentFetchQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(concurrentFetchQueue, ^{
         if (self.next)
@@ -88,6 +96,10 @@ dispatch_queue_t concurrentFetchQueue;
     
 }
 
+/*
+ * Μέθοδος που καλείται όταν η συσκευή δώσει σήμα ειδοποίησης για γέμισμα της μνήμης.
+ */
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -95,6 +107,10 @@ dispatch_queue_t concurrentFetchQueue;
 }
 
 #pragma mark - Table view data source
+
+/*
+ * Μέθοδος που καλείται κατα την κατασκευή του πίνακα. Επιστρέφει τον τίτλο της κεφαλίδας για κάθε κατηγορία του πίνακα.
+ */
 
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
@@ -146,10 +162,18 @@ dispatch_queue_t concurrentFetchQueue;
     return nil;
 }
 
+/*
+ * Μέθοδος που επιστρέφει το πλήθος των κεφαλίδων του πίνακα.
+ */
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 3;
 }
+
+/*
+ * Μέθοδος που επιστρέφει το πλήθος των γραμμών του πίνακα ανα κατηγορία.
+ */
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -170,6 +194,10 @@ dispatch_queue_t concurrentFetchQueue;
         return 0;
     }
 }
+
+/*
+ * Μέθοδος που επιστρέφει το κελί για κάθε γραμμή του πίνακα ανα κατηγορία.
+ */
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -196,6 +224,10 @@ dispatch_queue_t concurrentFetchQueue;
 
 #pragma mark - Table view delegate
 
+/*
+ * Μέθοδος που καλείται όταν η επιλεχθεί κάποιο κελί απο τον πίνακα.
+ */
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [SVProgressHUD showWithStatus:@"Loading..." maskType:SVProgressHUDMaskTypeBlack];
@@ -212,6 +244,10 @@ dispatch_queue_t concurrentFetchQueue;
         [self performSegueWithIdentifier:@"Release" sender:[[[self dataController] releases] objectAtIndex:indexPath.row]];
     }
 }
+
+/*
+ * Μέθοδος προετοιμασίας αλλαγής οθόνης. Ανάθεση ελεγκτή και απαραίτητων παραμέτρων.
+ */
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -298,16 +334,28 @@ dispatch_queue_t concurrentFetchQueue;
                    });
 }
 
+/*
+ * Μέθοδος που καλείται όταν αποφορτωθεί ο ελεγκτής απο τη μνήμη.
+ */
+
 - (void)viewDidUnload {
     [self setQueryLabel:nil];
     [super viewDidUnload];
 }
+
+/*
+ * Μέθοδος που καλείται όταν αποφορτωθεί ο ελεγκτής απο τη μνήμη.
+ */
 
 -(void)viewDidDisappear:(BOOL)animated
 {
     self.stopFetch = YES;
     dispatch_suspend(concurrentFetchQueue);
 }
+
+/*
+ * Μέθοδος που καλείται όταν αποφορτωθεί ο ελεγκτής απο τη μνήμη.
+ */
 
 -(void)dealloc
 {
